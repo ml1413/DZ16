@@ -3,6 +3,7 @@
     <style name="Base.Theme.DZ16" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/grey</item>
     </style>
 
     <style name="Theme.DZ16" parent="Base.Theme.DZ16" />
