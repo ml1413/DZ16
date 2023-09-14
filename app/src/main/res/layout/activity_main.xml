@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/grey">
+    android:background="@color/grey"
+    android:layout_height="match_parent">
 
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/activity_container"
+        android:name="com.example.dz16.fragmants.StartFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="10"
-        tools:listitem="@layout/item_hero" />
+        android:layout_height="match_parent" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

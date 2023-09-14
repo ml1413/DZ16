@@ -1,69 +1,67 @@
-package com.example.dz16
+package com.example.dz16.fragmants
 
-import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.example.dz16.R
 import com.example.dz16.adapter.AdapterForAllHolder
 import com.example.dz16.adapter.ClickItem
-import com.example.dz16.databinding.ActivityDetailsBinding
+import com.example.dz16.databinding.FragmentDetailsBinding
 import com.example.dz16.models.Character
-import com.example.dz16.utils.CHARACTER_CLASS
 import com.example.dz16.utils.KEY_CATEGORY
 import com.example.dz16.utils.K_INFO
 import com.example.dz16.utils.K_LABEL
 import com.example.dz16.utils.setImage
 
-class Details : AppCompatActivity(), ClickItem {
-    private val binding by lazy { ActivityDetailsBinding.inflate(layoutInflater) }
-    private var character: Character? = null
+
+class DetailsFragment : Fragment(), ClickItem {
+    private lateinit var binding: FragmentDetailsBinding
+    private var item: Character? = null
     private lateinit var adapter: AdapterForAllHolder
     private lateinit var listInfo: List<HashMap<String, String>>
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        initField()
+    fun setItem(item: Character) {
+        this.item = item
+    }
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
+        init()
+        setImageAndTitle()
+        return binding.root
+    }
+
+    private fun init() {
+        getListInfo()//запотняем listInfo
+        adapter = AdapterForAllHolder(clickItem = this, itemLayout = R.layout.item_details)
+        adapter.setList(list = listInfo)
 
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.smoothScrollToPosition(0)
+    }
 
-
-        character?.let {
+    private fun setImageAndTitle() {
+        item?.let {
             binding.ivDetails.setImage(it.images.md, false, binding.ivBackground)
-            binding.ivDetails.startAnimation(AnimationUtils.loadAnimation(this,R.anim.alpha))
+            binding.ivDetails.startAnimation(
+                AnimationUtils.loadAnimation(
+                    requireContext(),
+                    R.anim.alpha
+                )
+            )
             binding.tvNameCardView.text = it.name
         }
-
-
     }
 
-
-    private fun initField() {
-
-
-        //вытягиваем из intents character
-        intent?.let {
-            character = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                it.getSerializableExtra(CHARACTER_CLASS, Character::class.java)
-            } else {
-                it.getSerializableExtra(CHARACTER_CLASS) as Character
-            }
-        }
-        // получаем список всей онформации про героя
-        getListInfo()
-
-        //иницыализируем адаптэр передаем в конструктор лист
-        adapter = AdapterForAllHolder(this@Details, R.layout.item_details)
-        adapter.setList(listInfo)
-    }
-
-
-    override fun getModel(item: Character) {
-
-    }
 
     private fun getListInfo() {
-        character?.let {
-
+        item?.let {
             listInfo = listOf(
                 hashMapOf(KEY_CATEGORY to "статистика"),
                 hashMapOf(K_LABEL to "Интеллект", K_INFO to it.powerstats.intelligence),
@@ -105,4 +103,9 @@ class Details : AppCompatActivity(), ClickItem {
                 )
         }
     }
+
+    override fun getModel(item: Character) {
+        TODO("Not yet implemented")
+    }
+
 }

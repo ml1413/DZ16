@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
     private val clientOkHttp = OkHttpClient.Builder()
-        .addInterceptor(getInterceptor())
+//        .addInterceptor(getInterceptor())
         .build()
 
     private fun getInterceptor(): HttpLoggingInterceptor {

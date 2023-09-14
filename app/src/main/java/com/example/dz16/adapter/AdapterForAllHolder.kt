@@ -2,7 +2,6 @@ package com.example.dz16.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dz16.R
 
@@ -13,6 +12,7 @@ class AdapterForAllHolder(val clickItem: ClickItem, private val itemLayout: Int)
         listItem = list; notifyDataSetChanged()
     }
 
+
     override fun getItemCount() = listItem.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllHolders {
@@ -20,7 +20,7 @@ class AdapterForAllHolder(val clickItem: ClickItem, private val itemLayout: Int)
             .from(parent.context)
             .inflate(itemLayout, parent, false)
 
-      return  when (itemLayout) {
+        return when (itemLayout) {
             R.layout.item_hero -> AllHolders.CharacterHolder(view = view)
             R.layout.item_details -> AllHolders.CharacterDetails(view = view)
             else -> throw Exception("Error")
