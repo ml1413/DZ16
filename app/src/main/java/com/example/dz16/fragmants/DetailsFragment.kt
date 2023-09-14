@@ -70,7 +70,6 @@ class DetailsFragment : Fragment(), ClickItem {
                 hashMapOf(K_LABEL to "Долговечность", K_INFO to it.powerstats.durability),
                 hashMapOf(K_LABEL to "Сила", K_INFO to it.powerstats.power),
                 hashMapOf(K_LABEL to "Бой", K_INFO to it.powerstats.combat),
-                hashMapOf(K_LABEL to "Бой", K_INFO to it.powerstats.combat),
                 //__________________________________________________
                 hashMapOf(KEY_CATEGORY to "появление"),
                 hashMapOf(K_LABEL to "Пол", K_INFO to it.appearance.gender),
