@@ -6,5 +6,5 @@ import retrofit2.http.GET
 
 interface ApiInterface {
     @GET("superhero-api/api/all.json")
-    fun getAllHero(): Single<List<Character>>
+    suspend fun getAllHero(): List<Character>
 }

@@ -5,20 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.dz16.App
 import com.example.dz16.R
 import com.example.dz16.adapter.AdapterForAllHolder
 import com.example.dz16.adapter.ClickItem
 import com.example.dz16.databinding.FragmentStartBinding
 import com.example.dz16.models.Character
-import com.example.dz16.request.ApiClient
-import com.example.dz16.request.ApiInterface
 import com.example.dz16.request.disposable
-import com.example.dz16.request.requestApi
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class StartFragment : Fragment(), ClickItem {
     private lateinit var binding: FragmentStartBinding
-    private lateinit var client: ApiInterface
+    private val scope  = CoroutineScope(Dispatchers.IO)
     private lateinit var adapter: AdapterForAllHolder
     private var itemClickListener: (Character) -> Unit = {}
     private var characters: List<Character> = emptyList()
@@ -31,21 +33,19 @@ class StartFragment : Fragment(), ClickItem {
 
         initField()
 
-        if (characters.isEmpty()) {
-            requestApi(single = client.getAllHero()) {
-                characters = it as List<Character>
-                setListInAdapter(listItem = characters)
+        scope.launch {
+            val list = App.getApp().repository.getAllHero()
+            characters = list
+            withContext(Dispatchers.Main){
+                setListInAdapter(list)
             }
-        } else {
-            setListInAdapter(listItem = characters)
-        }
 
+        }
 
         return binding.root
     }
 
     private fun initField() {
-        client = ApiClient.retrofit.create(ApiInterface::class.java)
         adapter = AdapterForAllHolder(clickItem = this, itemLayout = R.layout.item_hero)
         binding.recyclerView.adapter = adapter
     }
