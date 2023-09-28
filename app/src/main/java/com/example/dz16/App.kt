@@ -20,7 +20,7 @@ class App : Application() {
             HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
         //_________________________________________________________________________________________
         val client = OkHttpClient.Builder()
-//            .addInterceptor(interceptor)
+            //.addInterceptor(interceptor)
             .build()
         //_________________________________________________________________________________________
         return Retrofit.Builder()

@@ -1,10 +1,12 @@
 package com.example.dz16.fragmants
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.dz16.R
 import com.example.dz16.adapter.AdapterForAllHolder
@@ -22,9 +24,6 @@ class DetailsFragment : Fragment(), ClickItem {
     private var item: Character? = null
     private lateinit var adapter: AdapterForAllHolder
     private lateinit var listInfo: List<HashMap<String, String>>
-    fun setItem(item: Character) {
-        this.item = item
-    }
 
 
     override fun onCreateView(
@@ -38,6 +37,7 @@ class DetailsFragment : Fragment(), ClickItem {
     }
 
     private fun init() {
+        item = getCharacterArgument()
         getListInfo()//запотняем listInfo
         adapter = AdapterForAllHolder(clickItem = this, itemLayout = R.layout.item_details)
         adapter.setList(list = listInfo)
@@ -102,6 +102,30 @@ class DetailsFragment : Fragment(), ClickItem {
                 )
         }
     }
+
+    companion object {
+        private const val KEY_CHARACTER = "KEY"
+        fun newInstance(item: Character): DetailsFragment {
+            val args = Bundle()
+            args.putSerializable(KEY_CHARACTER, item)
+            val fragment = DetailsFragment()
+            fragment.arguments = args
+            return fragment
+        }
+    }
+
+
+    private fun getCharacterArgument(): Character? {
+      return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            requireArguments().getSerializable(
+                KEY_CHARACTER,
+                Character::class.java
+            )
+        } else {
+            requireArguments().getSerializable(KEY_CHARACTER) as Character
+        }
+    }
+
 
     override fun getModel(item: Character) {
         TODO("Not yet implemented")

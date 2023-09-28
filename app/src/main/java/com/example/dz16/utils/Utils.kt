@@ -20,7 +20,6 @@ fun ImageView.setImage(url: String, circleCrop: Boolean, view: ImageView? = null
 
 }
 
-fun onOffProgressBar() {
-    Log.d("TAG1", "onOffProgressBar: ")
-    progressBar.isVisible = !progressBar.isVisible
+fun onOffProgressBar(shopProgressBar: Boolean) {
+    progressBar.isVisible = shopProgressBar
 }
