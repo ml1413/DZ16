@@ -7,14 +7,17 @@ import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.util.Util
 import com.example.dz16.App
 import com.example.dz16.models.Character
+import com.example.dz16.request.Repository
 import com.example.dz16.utils.onOffProgressBar
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class HeroViewModel : ViewModel() {
+@HiltViewModel
+class HeroViewModel @Inject constructor(val repository: Repository) : ViewModel() {
     private val _uiState = MutableLiveData<UiState>(UiState.Empty)
     val uiState: LiveData<UiState> = _uiState
-    private val repository = App.getApp().repository
     init {
         getData()
     }

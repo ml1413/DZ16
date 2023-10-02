@@ -13,8 +13,9 @@ import com.example.dz16.databinding.FragmentStartBinding
 import com.example.dz16.models.Character
 import com.example.dz16.utils.onOffProgressBar
 import com.example.dz16.viewModel.HeroViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class StartFragment : Fragment(), ClickItem {
     private lateinit var binding: FragmentStartBinding
     private lateinit var adapter: AdapterForAllHolder
