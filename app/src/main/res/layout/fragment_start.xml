@@ -8,8 +8,6 @@
     android:layout_height="match_parent"
     >
 
-
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
@@ -17,8 +15,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="10"
         tools:listitem="@layout/item_hero" />
-
-
 
 </FrameLayout>
 

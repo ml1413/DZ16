@@ -6,7 +6,7 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/activity_container"
-        android:name="com.example.dz16.fragmants.StartFragment"
+        android:name="com.example.dz16.fragmants.SplashFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

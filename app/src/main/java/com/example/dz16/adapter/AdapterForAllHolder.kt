@@ -4,8 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dz16.R
+import com.example.dz16.models.Character
 
-class AdapterForAllHolder(val clickItem: ClickItem, private val itemLayout: Int) :
+class AdapterForAllHolder(
+    private val itemLayout: Int,
+    private val clickCallBack: (item: Character) -> Unit = {}
+) :
     RecyclerView.Adapter<AllHolders>() {
     private var listItem: List<Any> = emptyList()
     fun setList(list: List<Any>) {
@@ -23,14 +27,16 @@ class AdapterForAllHolder(val clickItem: ClickItem, private val itemLayout: Int)
         return when (itemLayout) {
             R.layout.item_hero -> AllHolders.CharacterHolder(view = view)
             R.layout.item_details -> AllHolders.CharacterDetails(view = view)
+            R.layout.item_label_hero -> AllHolders.CharacterLabel(view = view)
             else -> throw Exception("Error")
         }
     }
 
     override fun onBindViewHolder(holder: AllHolders, position: Int) {
         when (holder) {
-            is AllHolders.CharacterHolder -> holder.initView(listItem[position], clickItem)
-            is AllHolders.CharacterDetails -> holder.initView(listItem[position], clickItem)
+            is AllHolders.CharacterHolder -> holder.initView(listItem[position], clickCallBack)
+            is AllHolders.CharacterDetails -> holder.initView(listItem[position])
+            is AllHolders.CharacterLabel -> holder.initView(listItem[position])
         }
     }
 

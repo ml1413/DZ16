@@ -7,4 +7,7 @@ class Repository(val client: ApiClient) {
     suspend fun getAllHero(): List<Character> {
         return apiInterface.getAllHero()
     }
+    suspend fun getHeroFromId(id: String): Character {
+       return apiInterface.getHeroFromId(id = id)
+    }
 }

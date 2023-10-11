@@ -8,15 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dz16.R
 import com.example.dz16.adapter.AdapterForAllHolder
-import com.example.dz16.adapter.ClickItem
 import com.example.dz16.databinding.FragmentStartBinding
 import com.example.dz16.models.Character
 import com.example.dz16.utils.onOffProgressBar
-import com.example.dz16.viewModel.HeroViewModel
+import com.example.dz16.viewModel.AllHeroViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class StartFragment : Fragment(), ClickItem {
+class StartFragment : Fragment() {
     private lateinit var binding: FragmentStartBinding
     private lateinit var adapter: AdapterForAllHolder
 
@@ -25,14 +24,14 @@ class StartFragment : Fragment(), ClickItem {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentStartBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(this)[HeroViewModel::class.java]
+        val viewModel = ViewModelProvider(this)[AllHeroViewModel::class.java]
 
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
-                HeroViewModel.UiState.Empty -> Unit
-                is HeroViewModel.UiState.Error -> Unit
-                HeroViewModel.UiState.Loading -> onOffProgressBar(shopProgressBar = true)
-                is HeroViewModel.UiState.Result -> {
+                AllHeroViewModel.UiState.Empty -> Unit
+                is AllHeroViewModel.UiState.Error -> Unit
+                AllHeroViewModel.UiState.Loading -> onOffProgressBar(shopProgressBar = true)
+                is AllHeroViewModel.UiState.Result -> {
                     setListInAdapter(uiState.list)
                     onOffProgressBar(shopProgressBar = false)
                 }
@@ -43,7 +42,9 @@ class StartFragment : Fragment(), ClickItem {
     }
 
     private fun initField() {
-        adapter = AdapterForAllHolder(clickItem = this, itemLayout = R.layout.item_hero)
+        adapter = AdapterForAllHolder(itemLayout = R.layout.item_hero) { character ->
+            openDetailsFragment(item = character)
+        }
         binding.recyclerView.adapter = adapter
     }
 
@@ -51,17 +52,13 @@ class StartFragment : Fragment(), ClickItem {
         adapter.setList(list = listItem)
     }
 
-
-    override fun getModel(item: Character) {
-        openDetailsFragment(item = item)
-    }
-
     private fun openDetailsFragment(item: Character) {
         val detailsFragment = DetailsFragment.newInstance(item = item)
-        requireActivity().supportFragmentManager
+        parentFragmentManager
             .beginTransaction()
-            .replace(R.id.activity_container, detailsFragment)
+            .addSharedElement(requireView().findViewById(R.id.iv_avatar), "image")
             .addToBackStack("")
+            .replace(R.id.activity_container, detailsFragment)
             .commit()
 
     }

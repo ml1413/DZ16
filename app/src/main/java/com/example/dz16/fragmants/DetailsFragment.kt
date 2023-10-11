@@ -2,15 +2,14 @@ package com.example.dz16.fragmants
 
 import android.os.Build
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.dz16.R
 import com.example.dz16.adapter.AdapterForAllHolder
-import com.example.dz16.adapter.ClickItem
 import com.example.dz16.databinding.FragmentDetailsBinding
 import com.example.dz16.models.Character
 import com.example.dz16.utils.KEY_CATEGORY
@@ -19,7 +18,7 @@ import com.example.dz16.utils.K_LABEL
 import com.example.dz16.utils.setImage
 
 
-class DetailsFragment : Fragment(), ClickItem {
+class DetailsFragment : Fragment() {
     private lateinit var binding: FragmentDetailsBinding
     private var item: Character? = null
     private lateinit var adapter: AdapterForAllHolder
@@ -31,6 +30,8 @@ class DetailsFragment : Fragment(), ClickItem {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentDetailsBinding.inflate(layoutInflater, container, false)
+        sharedElementEnterTransition = TransitionInflater.from(requireContext())
+            .inflateTransition(android.R.transition.move)
         init()
         setImageAndTitle()
         return binding.root
@@ -39,7 +40,7 @@ class DetailsFragment : Fragment(), ClickItem {
     private fun init() {
         item = getCharacterArgument()
         getListInfo()//запотняем listInfo
-        adapter = AdapterForAllHolder(clickItem = this, itemLayout = R.layout.item_details)
+        adapter = AdapterForAllHolder(itemLayout = R.layout.item_details)
         adapter.setList(list = listInfo)
 
         binding.recyclerView.adapter = adapter
@@ -68,7 +69,7 @@ class DetailsFragment : Fragment(), ClickItem {
                 hashMapOf(K_LABEL to "Сила", K_INFO to it.powerstats.strength),
                 hashMapOf(K_LABEL to "Скорость", K_INFO to it.powerstats.speed),
                 hashMapOf(K_LABEL to "Долговечность", K_INFO to it.powerstats.durability),
-                hashMapOf(K_LABEL to "Сила", K_INFO to it.powerstats.power),
+                hashMapOf(K_LABEL to "Мощность", K_INFO to it.powerstats.power),
                 hashMapOf(K_LABEL to "Бой", K_INFO to it.powerstats.combat),
                 //__________________________________________________
                 hashMapOf(KEY_CATEGORY to "появление"),
@@ -124,11 +125,6 @@ class DetailsFragment : Fragment(), ClickItem {
         } else {
             requireArguments().getSerializable(KEY_CHARACTER) as Character
         }
-    }
-
-
-    override fun getModel(item: Character) {
-        TODO("Not yet implemented")
     }
 
 }

@@ -1,0 +1,74 @@
+@startuml
+class com.example.dz16.databinding.FragmentDetailsBinding {
+- ConstraintLayout rootView
++ CardView cardView
++ Guideline guidCenter
++ Guideline guidOverRight
++ ImageView ivBackground
++ ImageView ivDetails
++ RecyclerView recyclerView
++ TextView tvNameCardView
++ View view
+- <<Create>> FragmentDetailsBinding(ConstraintLayout,CardView,Guideline,Guideline,ImageView,ImageView,RecyclerView,TextView,View)
++ ConstraintLayout getRoot()
++ {static} FragmentDetailsBinding inflate(LayoutInflater)
++ {static} FragmentDetailsBinding inflate(LayoutInflater,ViewGroup,boolean)
++ {static} FragmentDetailsBinding bind(View)
+}
+class com.example.dz16.BuildConfig {
++ {static} boolean DEBUG
++ {static} String APPLICATION_ID
++ {static} String BUILD_TYPE
++ {static} int VERSION_CODE
++ {static} String VERSION_NAME
+}
+class com.example.dz16.databinding.FragmentStartBinding {
+- FrameLayout rootView
++ RecyclerView recyclerView
+- <<Create>> FragmentStartBinding(FrameLayout,RecyclerView)
++ FrameLayout getRoot()
++ {static} FragmentStartBinding inflate(LayoutInflater)
++ {static} FragmentStartBinding inflate(LayoutInflater,ViewGroup,boolean)
++ {static} FragmentStartBinding bind(View)
+}
+class com.example.dz16.databinding.ItemDetailsBinding {
+- ConstraintLayout rootView
++ TextView tvCategory
++ TextView tvInfo
++ TextView tvPower
+- <<Create>> ItemDetailsBinding(ConstraintLayout,TextView,TextView,TextView)
++ ConstraintLayout getRoot()
++ {static} ItemDetailsBinding inflate(LayoutInflater)
++ {static} ItemDetailsBinding inflate(LayoutInflater,ViewGroup,boolean)
++ {static} ItemDetailsBinding bind(View)
+}
+class com.example.dz16.databinding.ActivityMainBinding {
+- FrameLayout rootView
++ FragmentContainerView activityContainer
++ ProgressBar progressBar
+- <<Create>> ActivityMainBinding(FrameLayout,FragmentContainerView,ProgressBar)
++ FrameLayout getRoot()
++ {static} ActivityMainBinding inflate(LayoutInflater)
++ {static} ActivityMainBinding inflate(LayoutInflater,ViewGroup,boolean)
++ {static} ActivityMainBinding bind(View)
+}
+class com.example.dz16.databinding.ItemHeroBinding {
+- ConstraintLayout rootView
++ CardView cardView
++ ImageView ivAvatar
++ ImageView ivBackground
++ TextView tvName
+- <<Create>> ItemHeroBinding(ConstraintLayout,CardView,ImageView,ImageView,TextView)
++ ConstraintLayout getRoot()
++ {static} ItemHeroBinding inflate(LayoutInflater)
++ {static} ItemHeroBinding inflate(LayoutInflater,ViewGroup,boolean)
++ {static} ItemHeroBinding bind(View)
+}
+
+
+androidx.viewbinding.ViewBinding <|.. com.example.dz16.databinding.FragmentDetailsBinding
+androidx.viewbinding.ViewBinding <|.. com.example.dz16.databinding.FragmentStartBinding
+androidx.viewbinding.ViewBinding <|.. com.example.dz16.databinding.ItemDetailsBinding
+androidx.viewbinding.ViewBinding <|.. com.example.dz16.databinding.ActivityMainBinding
+androidx.viewbinding.ViewBinding <|.. com.example.dz16.databinding.ItemHeroBinding
+@enduml
