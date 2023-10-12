@@ -1,9 +1,12 @@
 package com.example.dz16.fragmants
 
 import android.os.Bundle
+import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dz16.R
@@ -25,7 +28,6 @@ class StartFragment : Fragment() {
     ): View? {
         binding = FragmentStartBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(this)[AllHeroViewModel::class.java]
-
         viewModel.uiState.observe(viewLifecycleOwner) { uiState ->
             when (uiState) {
                 AllHeroViewModel.UiState.Empty -> Unit
@@ -41,10 +43,11 @@ class StartFragment : Fragment() {
         return binding.root
     }
 
+
     private fun initField() {
-        adapter = AdapterForAllHolder(itemLayout = R.layout.item_hero) { character ->
-            openDetailsFragment(item = character)
-        }
+        adapter = AdapterForAllHolder(itemLayout = R.layout.item_hero) {character,imageView->
+                openDetailsFragment(item = character,imageVIew = imageView)
+            }
         binding.recyclerView.adapter = adapter
     }
 
@@ -52,11 +55,11 @@ class StartFragment : Fragment() {
         adapter.setList(list = listItem)
     }
 
-    private fun openDetailsFragment(item: Character) {
+    private fun openDetailsFragment(item: Character,imageVIew:ImageView) {
         val detailsFragment = DetailsFragment.newInstance(item = item)
         parentFragmentManager
             .beginTransaction()
-            .addSharedElement(requireView().findViewById(R.id.iv_avatar), "image")
+            .addSharedElement(imageVIew, item.name)
             .addToBackStack("")
             .replace(R.id.activity_container, detailsFragment)
             .commit()

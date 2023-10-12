@@ -2,13 +2,15 @@ package com.example.dz16.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dz16.R
 import com.example.dz16.models.Character
 
 class AdapterForAllHolder(
     private val itemLayout: Int,
-    private val clickCallBack: (item: Character) -> Unit = {}
+    private val clickCallBackCharacter:
+        (character: Character, imageView: ImageView) -> Unit = { _, _ -> }
 ) :
     RecyclerView.Adapter<AllHolders>() {
     private var listItem: List<Any> = emptyList()
@@ -34,7 +36,11 @@ class AdapterForAllHolder(
 
     override fun onBindViewHolder(holder: AllHolders, position: Int) {
         when (holder) {
-            is AllHolders.CharacterHolder -> holder.initView(listItem[position], clickCallBack)
+            is AllHolders.CharacterHolder -> holder.initView(
+                listItem[position],
+                clickCallBackCharacter
+            )
+
             is AllHolders.CharacterDetails -> holder.initView(listItem[position])
             is AllHolders.CharacterLabel -> holder.initView(listItem[position])
         }

@@ -3,6 +3,7 @@ package com.example.dz16.adapter
 import android.animation.ObjectAnimator
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dz16.databinding.ItemDetailsBinding
@@ -19,12 +20,16 @@ sealed class AllHolders(view: View) : RecyclerView.ViewHolder(view) {
     class CharacterHolder(private val view: View) : AllHolders(view) {
         private val binding = ItemHeroBinding.bind(view)
 
-        fun initView(item: Any, clickCallBack: (item: Character) -> Unit) = with(binding) {
+        fun initView(
+            item: Any,
+            clickCallBackCharacter: (character: Character, imageView: ImageView) -> Unit
+        ) = with(binding) {
             val character = item as Character
             tvName.text = character.name
             ivAvatar.setImage(character.images.lg, true, ivBackground)
             itemView.setOnClickListener {
-                clickCallBack(character)
+                ivAvatar.transitionName = character.name
+                clickCallBackCharacter(item, ivAvatar)
             }
 
             ObjectAnimator.ofFloat(itemView, View.ALPHA, 0f, 1f)
